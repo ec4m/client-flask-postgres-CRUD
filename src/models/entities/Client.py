@@ -1,9 +1,9 @@
 class Client:
 
   def __init__(self, id, name=None, lastname=None, age=None) -> None:
-    self.id = id,
-    self.name = name,
-    self.lastname = lastname,
+    self.id = id
+    self.name = name
+    self.lastname = lastname
     self.age = age
 
   def to_JSON(self):
