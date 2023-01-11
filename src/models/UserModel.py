@@ -28,13 +28,21 @@ class UserModel:
 
 
   @classmethod
-  def get_user(id):
-    conn = get_connection()
+  def get_user(self,id):
+    try:
+      conn = get_connection()
 
-    with conn.cursor() as cursor:
-      cursor.execute("SELECT id, username, name, lastname, password FROM usuario WHERE id = %s", id)
-      row = cursor.fetchone()
+      with conn.cursor() as cursor:
+        cursor.execute("SELECT id, username, name, lastname, password FROM usuario WHERE id = %s", id)
+        row = cursor.fetchone()
 
-      user = None
-      if row != None:
-        user = User(row[0], row[0], row[0], row[0], row[0], )
+        user = None
+        if row != None:
+          user = User(row[0], row[1], row[2], row[3], row[4])
+          user = user.to_JSON()
+
+      conn.close()
+      return user
+
+    except Exception as ex:
+      raise Exception(ex)
