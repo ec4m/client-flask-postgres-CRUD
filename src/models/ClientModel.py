@@ -4,7 +4,6 @@ from .entities.Client import Client
 
 
 class ClientModel:
-
   @classmethod
   def get_clients(self):
     try:
@@ -45,3 +44,44 @@ class ClientModel:
 
     except Exception as ex:
       raise Exception(ex)
+
+
+  @classmethod
+  def add_client(self, client):
+    try:
+      conn = get_connection()
+
+      with conn.cursor() as cursor:
+        cursor.execute("""INSERT INTO client (id, name, lastname, age) 
+                          VALUES (%s,%s,%s,%s)""",(client.id, client.name, client.lastname, client.age))
+        affected_rows = cursor.rowcount
+        conn.commit()
+      
+      conn.close()
+      return affected_rows
+
+    except Exception as ex:
+      raise Exception(ex)
+
+    
+  @classmethod
+  def delete_client(self, client):
+    try:
+      conn = get_connection()
+
+      with conn.cursor() as cursor:
+        cursor.execute("DELETE FROM client WHERE id = %s", (client.id,))
+        affected_row = cursor.rowcount
+        conn.commit()
+
+      conn.close()
+      return affected_row
+
+    except Exception as ex:
+      raise Exception(ex)
+
+
+  @classmethod
+  def update_client(self, client):
+    pass  
+  

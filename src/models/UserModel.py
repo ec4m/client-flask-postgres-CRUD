@@ -17,7 +17,6 @@ class UserModel:
 
         for row in resultset:
           user = User(row[0], row[1], row[2], row[3], row[4])
-          print(user.to_JSON())
           users.append(user.to_JSON())
 
       conn.close()
@@ -46,3 +45,39 @@ class UserModel:
 
     except Exception as ex:
       raise Exception(ex)
+
+    
+  @classmethod
+  def add_user(self, user):
+    try:
+      conn = get_connection()
+
+      with conn.cursor() as cursor:
+        cursor.execute("""INSERT INTO usuario (id, username, name, lastname, password) 
+                          VALUES (%s, %s, %s, %s, %s)""", (user.id, user.username, user.name, user.lastname, user.password))
+        affected_row = cursor.rowcount
+        conn.commit()
+      
+      conn.close()
+      return affected_row
+
+    except Exception as ex:
+      raise Exception(ex)
+
+
+  @classmethod
+  def delete_user(self, user):
+    try:
+      conn = get_connection()
+      with conn.cursor() as cursor:
+        cursor.execute("DELETE FROM usuario WHERE id = %s", (user.id,))
+        affected_row = cursor.rowcount
+        conn.commit()
+
+      conn.close()
+      return affected_row
+
+    except Exception as ex:
+      raise Exception(ex)
+
+
