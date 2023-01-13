@@ -35,13 +35,13 @@ def get_user(id):
 @user.route('/add', methods=['POST'])
 def add_user():
   try:
-    #
+    id = uuid.uuid4()
     username = request.json['username']
     name = request.json['name']
     lastname = request.json['lastname']
     password = request.json['password']
 
-    user = User(id, username, name, lastname, password)
+    user = User(str(id), username, name, lastname, password)
 
     affected_row = UserModel.add_user(user)
 
