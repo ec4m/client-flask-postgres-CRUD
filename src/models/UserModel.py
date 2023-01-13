@@ -81,3 +81,18 @@ class UserModel:
       raise Exception(ex)
 
 
+  @classmethod
+  def update_user(self, user):
+    try:
+      conn = get_connection()
+      
+      with conn.cursor() as cursor:
+        cursor.execute("UPDATE usuario SET username=%s, name=%s, lastname=%s, password=%s WHERE id=%s", (user.username, user.name, user.lastname, user.password, user.id))
+        affected_row = cursor.rowcount
+        conn.commit()
+
+      conn.close()
+      return affected_row
+      
+    except Exception as ex:
+      raise Exception(ex)

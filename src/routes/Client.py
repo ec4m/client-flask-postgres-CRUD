@@ -63,3 +63,22 @@ def delete_client(id):
 
   except Exception as ex:
     return jsonify({'message': str(ex)})
+
+
+@client.route('/update/<id>', methods=['PUT'])
+def update_client(id):
+  try:
+    name = request.json['name']
+    lastname = request.json['lastname']
+    age = request.json['age']
+
+    client = Client(str(id), name, lastname, age)
+    affected_row = ClientModel.update_client(client)
+
+    if affected_row != None:
+      return jsonify(client.id)
+    else: 
+      return jsonify({'message': 'Client not updated.'})
+
+  except Exception as ex:
+    return jsonify({'message': str(ex)})

@@ -83,5 +83,16 @@ class ClientModel:
 
   @classmethod
   def update_client(self, client):
-    pass  
-  
+    try:
+      conn = get_connection()
+
+      with conn.cursor() as cursor:
+        cursor.execute("UPDATE client SET name=%s, lastname=%s, age=%s WHERE id=%s", (client.name, client.lastname, client.age, client.id))
+        affected_row = cursor.rowcount
+        conn.commit()
+
+      conn.close()
+      return affected_row
+
+    except Exception as ex:
+      raise Exception(ex)

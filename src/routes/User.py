@@ -63,3 +63,23 @@ def delete_user(id):
 
   except Exception as ex:
     return jsonify({'message': str(ex)})
+
+
+@user.route('/update/<id>', methods=['PUT'])
+def update_user(id):
+  try:
+    username = request.json['username']
+    name = request.json['name']
+    lastname = request.json['lastname']
+    password = request.json['password']
+
+    user = User(str(id), username, name, lastname, password)
+    affected_row = UserModel.update_user(user)
+
+    if affected_row != None:
+      return jsonify(user.id)
+    else:
+      return jsonify({'message': 'No user updated'})
+      
+  except Exception as ex:
+    return jsonify({'message': str(ex)})
