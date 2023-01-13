@@ -54,3 +54,33 @@ class ProductModel:
 
     except Exception as ex:
       raise Exception(ex)
+
+  
+  @classmethod
+  def delete_product(self, product):
+    try:
+      conn = get_connection()
+      with conn.cursor() as cursor:
+        cursor.execute("DELETE FROM product WHERE id=%s", (product.id,))
+        affected_row = cursor.rowcount
+        conn.commit()
+      conn.close()
+      return affected_row
+        
+    except Exception as ex:
+      raise Exception(ex)
+      
+
+  @classmethod
+  def update_product(self, product):
+    try:
+      conn = get_connection()
+      with conn.cursor() as cursor:
+        cursor.execute("UPDATE product SET name=%s, description=%s, price=%s WHERE id=%s", (product.name, product.description, product.price, product.id))
+        affected_row = cursor.rowcount
+        conn.commit()
+      conn.close()
+      return affected_row
+
+    except Exception as ex:
+      raise Exception(ex)

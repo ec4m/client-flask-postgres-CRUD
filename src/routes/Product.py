@@ -49,3 +49,33 @@ def add_product():
     
   except Exception as ex:
     return jsonify({'message': str(ex)})
+
+  
+@product.route('/delete/<id>', methods=['DELETE'])
+def delete_product(id):
+  try:
+    product = Product(id)
+    affected_row = ProductModel.delete_product(product)
+    if affected_row != None:
+      return jsonify(product.id)
+    else: 
+      return jsonify({'message': 'Product not deleted.'})
+  except Exception as ex:
+    return jsonify({'message': str(ex)})
+    
+
+@product.route('/update/<id>', methods=['PUT'])
+def update_product(id):
+  try:
+    name = request.json['name']
+    description = request.json['description']
+    price = request.json['price']
+    product = Product(str(id), name, description, price)
+    affected_row = ProductModel.update_product(product)
+    if affected_row != None:
+      return jsonify(product.id)
+    else: 
+      return jsonify({'message': 'Product not updated'})
+
+  except Exception as ex:
+    return jsonify({'message': str(ex)})
