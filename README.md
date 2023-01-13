@@ -1,5 +1,7 @@
 # Proyecto de CRUD con python - flask - postgreSQL
 
+Flask de servicios
+
 ### Descargar el repositorio y configuraciones
 En la consola se escribe:
 ```sh
@@ -52,7 +54,7 @@ CREATE TABLE IF NOT EXISTS public.product
 )
 ```
 
-###Configuración de variables de entorno
+### Configuración de variables de entorno
 Se debe crear un archivo .env para escribir las variables de entorno necesarias para la configuración del servidor y la conexión a la base de datos, se puede crear con el comando:
 ```sh
 touch .env
