@@ -4,7 +4,7 @@ from flask import Flask
 from config import config
 
 # Routes
-from routes import Client, User
+from routes import Client, User, Product
 
 app = Flask(__name__)
 
@@ -16,6 +16,7 @@ if __name__ == '__main__':
 
   app.register_blueprint(Client.client, url_prefix='/api/client')
   app.register_blueprint(User.user, url_prefix='/api/user')
+  app.register_blueprint(Product.product, url_prefix='/api/product')
 
   app.register_error_handler(404, page_not_found)
   app.run(debug=True, port=3000)
